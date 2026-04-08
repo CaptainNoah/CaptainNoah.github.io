@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noah's Task Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <button id="settings-button" class="settings-button" type="button" aria-label="Open appearance settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19.14 12.94a7.43 7.43 0 0 0 .05-.94 7.43 7.43 0 0 0-.05-.94l2.03-1.58a.5.5 0 0 0 .12-.63l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.28 7.28 0 0 0-1.63-.94l-.36-2.54a.5.5 0 0 0-.49-.42h-3.84a.5.5 0 0 0-.49.42l-.36 2.54a7.28 7.28 0 0 0-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.7 8.85a.5.5 0 0 0 .12.63l2.03 1.58a7.43 7.43 0 0 0-.05.94 7.43 7.43 0 0 0 .05.94L2.82 14.52a.5.5 0 0 0-.12.63l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.5.38 1.05.69 1.63.94l.36 2.54a.5.5 0 0 0 .49.42h3.84a.5.5 0 0 0 .49-.42l.36-2.54a7.28 7.28 0 0 0 1.63-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.63l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Z"></path>
+          </svg>
+        </button>
+
+        <p class="eyebrow">Personal task website</p>
+        <h1>Noah's<br><span>Task Board</span></h1>
+        <p class="hero-text">
+          Capture ideas, keep deadlines in view, and check things off without needing an account or a server.
+        </p>
+      </div>
+
+      <section class="hero-card" aria-label="Task summary">
+        <p class="hero-card-label">Today's momentum</p>
+        <div class="stat-grid">
+          <div>
+            <span id="task-count" class="stat-value">0</span>
+            <span class="stat-label">Tasks</span>
+          </div>
+          <div>
+            <span id="open-count" class="stat-value">0</span>
+            <span class="stat-label">Open</span>
+          </div>
+          <div>
+            <span id="done-count" class="stat-value">0</span>
+            <span class="stat-label">Done</span>
+          </div>
+        </div>
+        <p id="status-message" class="status-message">Nothing on the board yet. Add your first task below.</p>
+      </section>
+    </header>
+
+    <main class="app-grid">
+      <section class="panel form-panel">
+        <div class="panel-heading">
+          <p class="panel-kicker">New task</p>
+          <h2>Add something worth remembering</h2>
+        </div>
+
+        <form id="task-form" class="task-form">
+          <p id="form-mode" class="form-mode">Tasks save in your browser automatically.</p>
+
+          <label class="field">
+            <span>Task title</span>
+            <input id="task-title" name="title" type="text" maxlength="80" placeholder="Finish portfolio homepage" required>
+          </label>
+
+          <label class="toggle-field">
+            <input id="task-recurring" name="isRecurring" type="checkbox">
+            <span>Recurring task</span>
+          </label>
+
+          <label class="field">
+            <span>Notes</span>
+            <textarea id="task-notes" name="notes" rows="4" maxlength="240" placeholder="Optional details, links, or reminders"></textarea>
+          </label>
+
+          <div class="field-row">
+            <div id="due-date-field">
+              <label class="field">
+                <span>Due date</span>
+                <input id="task-due-date" name="dueDate" type="date">
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Priority</span>
+              <select id="task-priority" name="priority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+          </div>
+
+          <section id="recurring-fields" class="recurring-fields" hidden>
+            <div class="field-row recurring-row">
+              <label class="field">
+                <span>Repeat</span>
+                <select id="task-repeat-mode" name="repeatMode">
+                  <option value="daily">Every day</option>
+                  <option value="weekly">Specific days</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Reset time</span>
+                <div class="time-picker" aria-label="Reset time">
+                  <select id="task-reset-hour" name="resetHour" aria-label="Reset hour"></select>
+                  <span class="time-separator">:</span>
+                  <select id="task-reset-minute" name="resetMinute" aria-label="Reset minute"></select>
+                </div>
+              </label>
+            </div>
+
+            <fieldset id="weekday-fieldset" class="weekday-fieldset" hidden>
+              <legend>Days</legend>
+              <div class="weekday-grid">
+                <label class="day-chip"><input type="checkbox" name="repeat-day" value="1"><span>Mon</span></label>
+                <label class="day-chip"><input type="checkbox" name="repeat-day" value="2"><span>Tue</span></label>
+                <label class="day-chip"><input type="checkbox" name="repeat-day" value="3"><span>Wed</span></label>
+                <label class="day-chip"><input type="checkbox" name="repeat-day" value="4"><span>Thu</span></label>
+                <label class="day-chip"><input type="checkbox" name="repeat-day" value="5"><span>Fri</span></label>
+                <label class="day-chip"><input type="checkbox" name="repeat-day" value="6"><span>Sat</span></label>
+                <label class="day-chip"><input type="checkbox" name="repeat-day" value="0"><span>Sun</span></label>
+              </div>
+            </fieldset>
+
+            <p class="recurring-help">
+              Recurring tasks live in their own tab and reset automatically after the chosen time.
+            </p>
+          </section>
+
+          <div class="form-actions">
+            <button id="submit-button" class="primary-button" type="submit">Add task</button>
+            <button id="cancel-edit" class="ghost-button" type="button" hidden>Cancel edit</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel list-panel">
+        <div class="panel-heading">
+          <p class="panel-kicker">Task list</p>
+          <h2>Keep the day organized</h2>
+        </div>
+
+        <div class="toolbar">
+          <div class="toolbar-row">
+            <div class="filter-group" role="tablist" aria-label="Task filters">
+              <button class="filter-button is-active" data-filter="all" type="button">All</button>
+              <button class="filter-button" data-filter="recurring" type="button">Recurring</button>
+              <button class="filter-button" data-filter="completed" type="button">Completed</button>
+            </div>
+
+            <div class="toolbar-controls">
+              <label class="sort-field">
+                <span>Sort</span>
+                <select id="sort-select">
+                  <option value="manual">Manual order</option>
+                  <option value="priority">Priority</option>
+                  <option value="due-soonest">Due date: soonest</option>
+                  <option value="due-latest">Due date: latest</option>
+                  <option value="newest">Newest first</option>
+                </select>
+              </label>
+
+              <label class="search-field">
+                <span class="sr-only">Search tasks</span>
+                <input id="search-input" type="search" placeholder="Search tasks">
+              </label>
+            </div>
+          </div>
+
+          <p id="organize-hint" class="organize-hint">
+            Manual order is on. Drag the handle or use the move buttons to arrange tasks.
+          </p>
+        </div>
+
+        <div id="task-list" class="task-list" aria-live="polite"></div>
+
+        <div class="list-footer">
+          <p id="footer-summary">0 tasks shown</p>
+          <button id="clear-completed" class="ghost-button" type="button">Clear completed</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="task-template">
+    <article class="task-card">
+      <div class="task-main">
+        <button class="drag-handle" type="button" title="Drag to reorder">Drag</button>
+
+        <label class="task-check">
+          <input class="task-toggle" type="checkbox">
+          <span class="custom-check" aria-hidden="true"></span>
+          <span class="sr-only">Mark task completed</span>
+        </label>
+
+        <div class="task-copy">
+          <div class="task-meta">
+            <span class="priority-pill"></span>
+            <span class="due-pill"></span>
+            <span class="schedule-pill"></span>
+          </div>
+          <h3 class="task-title"></h3>
+          <p class="task-notes"></p>
+        </div>
+      </div>
+
+      <div class="task-actions">
+        <button class="ghost-button task-move-up" type="button">Move up</button>
+        <button class="ghost-button task-move-down" type="button">Move down</button>
+        <button class="ghost-button task-edit" type="button">Edit</button>
+        <button class="ghost-button task-delete" type="button">Delete</button>
+      </div>
+    </article>
+  </template>
+
+  <dialog id="settings-dialog" class="dialog settings-dialog">
+    <div class="dialog-shell">
+      <div class="dialog-header">
+        <div>
+          <p class="panel-kicker">Appearance</p>
+          <h2>Personalize the board</h2>
+        </div>
+        <button id="close-settings" class="icon-button" type="button" aria-label="Close settings">X</button>
+      </div>
+
+      <section class="settings-group">
+        <div class="settings-heading">
+          <h3>Theme</h3>
+          <p>Change the color mood of the whole site.</p>
+        </div>
+        <div class="theme-grid" role="list">
+          <button class="theme-card" type="button" data-theme="terracotta">
+            <span class="theme-swatch swatch-terracotta"></span>
+            <strong>Terracotta</strong>
+            <small>Warm, soft, and studio-like</small>
+          </button>
+          <button class="theme-card" type="button" data-theme="forest">
+            <span class="theme-swatch swatch-forest"></span>
+            <strong>Forest</strong>
+            <small>Natural greens and paper tones</small>
+          </button>
+          <button class="theme-card" type="button" data-theme="midnight">
+            <span class="theme-swatch swatch-midnight"></span>
+            <strong>Midnight</strong>
+            <small>Dark glass with bright contrast</small>
+          </button>
+          <button class="theme-card" type="button" data-theme="blueprint">
+            <span class="theme-swatch swatch-blueprint"></span>
+            <strong>Blueprint</strong>
+            <small>Crisp blue and ivory panels</small>
+          </button>
+        </div>
+      </section>
+
+      <section class="settings-group">
+        <div class="settings-heading">
+          <h3>Interface Density</h3>
+          <p>Choose how spacious or tight the layout should feel.</p>
+        </div>
+        <div class="choice-row">
+          <button class="choice-pill" type="button" data-density="comfortable">Comfortable</button>
+          <button class="choice-pill" type="button" data-density="compact">Compact</button>
+        </div>
+      </section>
+
+      <section class="settings-group">
+        <div class="settings-heading">
+          <h3>Corner Style</h3>
+          <p>Shift the interface from soft to sharper edges.</p>
+        </div>
+        <div class="choice-row">
+          <button class="choice-pill" type="button" data-corners="soft">Soft</button>
+          <button class="choice-pill" type="button" data-corners="sharp">Sharp</button>
+        </div>
+      </section>
+
+      <div class="dialog-actions">
+        <button id="reset-appearance" class="ghost-button" type="button">Reset appearance</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="confirm-dialog" class="dialog confirm-dialog">
+    <div class="dialog-shell confirm-shell">
+      <div class="dialog-header">
+        <div>
+          <p class="panel-kicker">Delete task</p>
+          <h2>Remove this task?</h2>
+        </div>
+      </div>
+
+      <p id="confirm-message" class="confirm-message">
+        This task will be removed from your board.
+      </p>
+
+      <div class="dialog-actions">
+        <button id="cancel-delete" class="ghost-button" type="button">Keep task</button>
+        <button id="confirm-delete" class="primary-button danger-button" type="button">Delete task</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
